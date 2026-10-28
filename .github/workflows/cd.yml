@@ -1,0 +1,26 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  desplegar:
+    name: Desplegar en Render
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Desplegar la API
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_API }}
+        run: curl -X POST "$HOOK"
+
+      - name: Desplegar la interfaz (Gradio)
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_UI }}
+        run: curl -X POST "$HOOK"

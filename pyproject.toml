@@ -1,0 +1,32 @@
+[project]
+name = "mantenimiento-mlops"
+version = "0.1.0"
+description = "Predicción de fallas de máquinas (mantenimiento predictivo) de punta a punta: datos, modelo, API, interfaz, Docker y CI/CD"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.146.0",
+    "gradio>=6.30.0",
+    "joblib>=1.6.0",
+    "pandas>=3.0.6",
+    "pydantic>=2.14.1",
+    "scikit-learn>=1.9.1",
+    "uvicorn>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[project.scripts]
+preparar-datos = "mantenimiento_mlops.data:main"
+entrenar = "mantenimiento_mlops.train:main"
+predecir = "mantenimiento_mlops.predict:main"
