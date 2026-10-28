@@ -13,9 +13,9 @@ a partir de las lecturas de sus sensores, y lo sirve por una **API (FastAPI)**, 
 
 | | |
 |---|---|
-| Repositorio | _pega aquí la URL de GitHub_ |
-| API desplegada | _pega aquí la URL de Render (API)_ — documentación en `/docs` |
-| Interfaz desplegada | _pega aquí la URL de Render (Gradio)_ |
+| Repositorio | https://github.com/edex10ed-source/mantenimiento-mlops |
+| API desplegada | https://mantenimiento-mlops-api.onrender.com (documentación en `/docs`) 
+| Interfaz desplegada | https://TU-INTERFAZ.onrender.com |
 
 ## Ejecutar desde cero
 
