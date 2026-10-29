@@ -1,4 +1,4 @@
-# Mantenimiento predictivo de máquinas (MLOps de punta a punta)
+# Mantenimiento predictivo de máquinas (MLOps)
 
 Proyecto final de Data Science G8. Predice si una máquina de producción **va a fallar**
 a partir de las lecturas de sus sensores, y lo sirve por una **API (FastAPI)**, una
@@ -13,16 +13,16 @@ a partir de las lecturas de sus sensores, y lo sirve por una **API (FastAPI)**, 
 
 | | |
 |---|---|
-| Repositorio | https://github.com/edex10ed-source/mantenimiento-mlops |
-| API desplegada | https://mantenimiento-mlops-api.onrender.com (documentación en `/docs`) 
-| Interfaz desplegada | https://TU-INTERFAZ.onrender.com |
+| Repositorio | [github.com/edex10ed-source/mantenimiento-mlops](https://github.com/edex10ed-source/mantenimiento-mlops) |
+| API desplegada | [mantenimiento-mlops-api.onrender.com](https://mantenimiento-mlops-api.onrender.com) (documentación en `/docs`) |
+| Interfaz desplegada | [mantenimiento-mlops-ui.onrender.com](https://mantenimiento-mlops-ui.onrender.com) |
 
 ## Ejecutar desde cero
 
 Requisitos: [uv](https://docs.astral.sh/uv/) (instala Python 3.13 solo) y, opcionalmente, Docker.
 
 ```bash
-git clone <URL-del-repo> && cd mantenimiento_mlops
+git clone https://github.com/edex10ed-source/mantenimiento-mlops && cd mantenimiento-mlops
 uv sync                      # instala dependencias exactas de uv.lock
 uv run preparar-datos        # lee, valida y resume el dataset
 uv run entrenar              # entrena, evalúa, aplica la puerta de calidad y guarda models/
@@ -124,17 +124,12 @@ Los valores exactos de cada entrenamiento quedan en `models/metrics.json`.
 Servicios en Render (tipo *Web Service*, entorno Docker, mismo repositorio):
 
 1. **API:** usa el `Dockerfile` tal cual (ya respeta la variable `PORT`).
-2. **Interfaz:** mismo repositorio, con el comando de Docker
-   `sh -c "GRADIO_SERVER_NAME=0.0.0.0 GRADIO_SERVER_PORT=$PORT python app/gradio_app.py"`
-   y la variable de entorno `API_URL` con la URL pública de la API.
+2. **Interfaz:** mismo repositorio, con el comando de Docker `python app/gradio_app.py`
+   y estas variables de entorno: `API_URL` (URL pública de la API),
+   `GRADIO_SERVER_NAME=0.0.0.0` y `PORT=7860`.
+
+El **Auto-Deploy** de ambos servicios está en *Off*: solo despliega el CD, y solo si el CI pasó.
 
 En el plan Free el servicio se duerme tras 15 minutos sin tráfico: la primera petición puede tardar
 cerca de un minuto. Si falla la demo por eso, `docker compose up` muestra lo mismo en local.
-
-## Notas de mantenimiento
-
-- Si cambias dependencias en `pyproject.toml`, ejecuta `uv lock` y haz commit de `uv.lock`
-  (el CI y el Dockerfile usan `--locked`).
-- La versión de Python debe coincidir en `.python-version`, `pyproject.toml` y la imagen base del
-  `Dockerfile` (`python:3.13-slim`); si no, `uv` descarga su propio Python en `/root` y el contenedor
-  falla con `Permission denied` al correr como `appuser`.
+git 
