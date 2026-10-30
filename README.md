@@ -69,13 +69,7 @@ models/             # (generado) maintenance_model.joblib y metrics.json
 | POST | `/predict` | Predice la falla. 422 si la entrada es inválida, 503 si no hay modelo |
 
 Ejemplo:
-
-```bash
-curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{
-  "product_type": "L", "air_temp_k": 298.9, "process_temp_k": 309.1,
-  "rot_speed_rpm": 2861, "torque_nm": 4.6, "tool_wear_min": 143 }'
-# {"failure_predicted":true,"failure_probability":1.0,"label":"Falla probable","decision_threshold":0.5}
-```
+Puedes probar la API en `/docs`, que trae un ejemplo cargado.
 
 ## Decisiones técnicas
 
