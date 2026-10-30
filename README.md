@@ -82,8 +82,9 @@ Puedes probar la API en `/docs`, que trae un ejemplo cargado.
   de un modelo trivial (F1 = 0).
 - **Sin fuga de datos:** las columnas `TWF, HDF, PWF, OSF, RNF` indican el *tipo* de falla y solo
   se conocen cuando ya ocurrió; no se usan como entrada. Tampoco `UDI` ni `Product ID`.
-- **Variables derivadas:** `temp_diff_k`, `power_w` y `wear_torque` reflejan los mecanismos
-  físicos de falla. Subieron el F1 de ~0.67 a ~0.89 con el mismo modelo.
+- **Variables derivadas:** el modelo calcula tres variables nuevas a partir de las lecturas
+  (`features.py`): `temp_diff_k` (temperatura del proceso − del aire), `power_w` (torque × velocidad
+  angular) y `wear_torque` (desgaste × torque). Subieron el F1 de ~0.67 a ~0.89 con el mismo modelo.
 - **Reproducibilidad:** semilla fija (`RANDOM_STATE = 42`), split estratificado 80/20,
   dependencias fijadas en `uv.lock`.
 - **El modelo se carga una vez** (`lru_cache`), no en cada petición.
